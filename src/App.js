@@ -1,25 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import {BrowserRouter as Router, Routes, Route}
+  from 'react-router-dom';
+import LandingPage from './pages/landingPage';
+import Stonks from './pages/stonks';
+import React from "react";
 
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label>Get ticker data</Form.Label>
-            <Form.Control type="name" placeholder="Enter stock ticker" />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Get Data
-          </Button>
-        </Form>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path='/' element={<LandingPage/>} />
+        <Route path ='/Stock' element={<Stonks/>} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,5 +1,17 @@
 import React from "react";
-import {Area, AreaChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
+import {
+    Area,
+    Line,
+    ReferenceLine,
+    LineChart,
+    AreaChart,
+    CartesianGrid,
+    Legend,
+    Tooltip,
+    XAxis,
+    YAxis,
+    CartesianAxis
+} from "recharts";
 
 class AreaRechartComponent extends React.Component {
 
@@ -16,7 +28,7 @@ class AreaRechartComponent extends React.Component {
         },
         {
             "name": "Mar 2019",
-            "Product A": 4565,
+            "Product A": -4565,
             "Procuct B": 4556
         },
         {
@@ -32,27 +44,26 @@ class AreaRechartComponent extends React.Component {
     ]
 
     render() {
-        return (
-            <AreaChart width={750} height={250} data={this.data}
-                       margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                <defs>
-                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                    </linearGradient>
-                    <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                        <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-                    </linearGradient>
-                </defs>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip />
-                <Legend />
-                <Area type="monotone" dataKey="Product A" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-                <Area type="monotone" dataKey="Procuct B" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
-            </AreaChart>
+        return(
+        <div className="Graph">
+            <LineChart width={800} height={450} data={this.data}
+                       margin={{
+                           top: 20,
+                           right: 50,
+                           left: 20,
+                           bottom: 5,
+                       }}>
+                <XAxis dataKey="name" strokeWidth="5" stroke="#c4d6e6" xAxisId="0"/>
+                <XAxis dataKey="2" strokeWidth={3} orientation="top" stroke="#424455" xAxisId="1" tickCount={0} tickSize="0" strokeDasharray="7 7"/>
+                <YAxis strokeWidth="5" stroke="#c4d6e6" yAxisId={0}/>
+                <YAxis strokeWidth="3" orientation="right" stroke="#424455" yAxisId={1} strokeDasharray="7 7"/>
+                <Legend/>
+                <CartesianGrid fill="#31323b" strokeWidth="0"/>
+                <ReferenceLine y={0} stroke="#50536a" />
+                <Line type="monotone" dataKey="Product A" stroke="#c7c7c7" strokeWidth="3"/>
+                <Line type="monotone" dataKey="Procuct B" stroke="#5a8ab5" strokeWidth="3"/>
+            </LineChart>
+        </div>
         )
     };
 }

@@ -1,7 +1,12 @@
 <?php
 	
 	/*TODO: 
+	DONE:
 	- time frame (have both ends regaradless of mod)
+	
+	
+	
+	TODO:
 	- multi-database support
 	- tuplecount
 	- more complex stats
@@ -80,6 +85,10 @@ function tempTest() {
 function getStockData($ticker, $statistic, $resolution, $startDate, $endDate) {
 	global $conn;
 	
+	if($resolution < 2) {
+		error("Resolution must be 2 or more!");
+	}
+	
     // Create Connection to Datbase
     if (!$conn) error("Could not connect to database.");
 	
@@ -104,7 +113,9 @@ function getStockData($ticker, $statistic, $resolution, $startDate, $endDate) {
 	}
 	
 	$userDB = "jschedel";
-	
+
+
+
 	if($startDate == NULL) {
 		
 		$dateStatement = oci_parse($conn, "SELECT reportDate FROM {$userDB}.stockReport WHERE stockTicker = '{$ticker}' ORDER BY reportDate ASC FETCH FIRST 1 ROW ONLY");
@@ -112,7 +123,17 @@ function getStockData($ticker, $statistic, $resolution, $startDate, $endDate) {
 		oci_execute($dateStatement);
 		
 		$startDate = oci_fetch_assoc($dateStatement)['REPORTDATE'];
+				
+		oci_free_statement($dateStatement);
 		
+	} else {
+		
+		$dateStatement = oci_parse($conn, "SELECT reportDate, ABS(reportDate - to_date('{$startDate}', 'YYYY-MM-DD')) AS dateDiff FROM {$userDB}.stockReport WHERE stockTicker = '{$ticker}' ORDER BY dateDiff ASC FETCH FIRST 1 ROWS ONLY");
+		
+		oci_execute($dateStatement);
+		
+		$startDate = oci_fetch_assoc($dateStatement)['REPORTDATE'];
+				
 		oci_free_statement($dateStatement);
 		
 	}
@@ -124,31 +145,53 @@ function getStockData($ticker, $statistic, $resolution, $startDate, $endDate) {
 		oci_execute($dateStatement2);
 			
 		$endDate = oci_fetch_assoc($dateStatement2)['REPORTDATE'];
-		
+				
 		oci_free_statement($dateStatement2);
+		
+	} else {
+		
+		$dateStatement = oci_parse($conn, "SELECT reportDate, ABS(reportDate - to_date('{$endDate}', 'YYYY-MM-DD')) AS dateDiff FROM {$userDB}.stockReport WHERE stockTicker = '{$ticker}' ORDER BY dateDiff ASC FETCH FIRST 1 ROWS ONLY");
+		
+		oci_execute($dateStatement);
+		
+		$endDate = oci_fetch_assoc($dateStatement)['REPORTDATE'];
+				
+		oci_free_statement($dateStatement);
 		
 	}
 	
-	error("{$startDate}   {$endDate}");
+	$IDstatement1 = oci_parse($conn, "SELECT id FROM {$userDB}.stockReport WHERE stockTicker = '{$ticker}' AND reportDate = '{$startDate}'");
+	
+	oci_execute($IDstatement1);
+	
+	$startID = oci_fetch_assoc($IDstatement1)['ID'];
+	
+	oci_free_statement($IDstatement1);
 	
 	
-		/*	
-		$countStatement = oci_parse($conn, "SELECT COUNT(*) AS TOTAL FROM {$userDB}.stockReport WHERE stockTicker = '{$ticker}'");
-		
-		oci_execute($countStatement);
-			
-		$countResponse = oci_fetch_assoc($countStatement)['TOTAL'];
-		
-		oci_free_statement($countStatement);
-			
-		$modResolution = $countResponse/$resolution;
-		
-		$statement = oci_parse($conn, "SELECT reportDate, {$statistic} FROM {$userDB}.stockReport WHERE stockTicker = '{$ticker}' AND MOD(ID, {$modResolution}) = 0");
-		oci_execute($statement);
-		*/
+	$IDstatement2 = oci_parse($conn, "SELECT id FROM {$userDB}.stockReport WHERE stockTicker = '{$ticker}' AND reportDate = '{$endDate}'");
 	
+	oci_execute($IDstatement2);
+	
+	$endID = oci_fetch_assoc($IDstatement2)['ID'];
+	
+	oci_free_statement($IDstatement2);
+	
+	//error("{$startID}   {$endID}");
 		
-		
+	
+	$countDiff = (int)$endID - (int)$startID;
+	
+	$resolution = $resolution - 1;
+	
+	$modResolution = $countDiff/$resolution;
+	
+	
+	$statement = oci_parse($conn, "SELECT reportDate, {$statistic} FROM {$userDB}.stockReport WHERE stockTicker = '{$ticker}' AND (((reportDate >= '{$startDate}') AND (reportDate <= '{$endDate}') AND (   MOD(ID, CAST({$modResolution} AS INT)) - MOD({$startID}, CAST({$modResolution} AS INT)) = '0'   )) OR reportDate = '{$endDate}') ORDER BY reportDate ASC");
+	
+	//exit("SELECT reportDate, {$statistic} FROM {$userDB}.stockReport WHERE stockTicker = '{$ticker}' AND (((reportDate >= '{$startDate}') AND (reportDate <= '{$endDate}') AND (   MOD(ID, CAST({$modResolution} AS INT)) - MOD({$startID}, CAST({$modResolution} AS INT)) = '0'   )) OR reportDate = '{$endDate}') ORDER BY reportDate ASC");
+	
+	oci_execute($statement);
 	
 
 	$response = array();

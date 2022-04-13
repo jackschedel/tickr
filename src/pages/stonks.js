@@ -7,7 +7,7 @@ const Stonks = () => {
     return(
         <div className='App'>
             <header className='App-header'>
-                <DropDownData stocks={data}></DropDownData>
+                <DropDownData></DropDownData>
                 <LineGraph></LineGraph>
             </header>
         </div>

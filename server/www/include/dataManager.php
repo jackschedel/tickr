@@ -184,6 +184,12 @@ function getStockData($ticker, $statistic, $resolution, $startDate, $endDate) {
 	
 	$resolution = $resolution - 1;
 	
+	if($resolution < $countDiff) {
+		
+		$resolution = $countDiff;
+		
+	}
+	
 	$modResolution = $countDiff/$resolution;
 	
 	

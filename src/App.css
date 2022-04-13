@@ -29,6 +29,10 @@ div.Graph {
   color: white;
 }
 
+.nav-link {
+  color: #C4D6E6 !important;
+}
+
 .App-link {
   color: #61dafb;
 }

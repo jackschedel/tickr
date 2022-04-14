@@ -19,6 +19,7 @@ class AreaRechartComponent extends React.Component {
         super();
         this.state = {
             stockList: ["APL", "A", "GM"],
+            data: "Adjusted CLose"
         }
     }
     data = [

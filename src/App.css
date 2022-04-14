@@ -7,7 +7,7 @@
 }
 
 img.logo {
-  margin-left:  calc(6vh);
+  margin-left:  40px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

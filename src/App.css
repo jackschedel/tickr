@@ -1,14 +1,13 @@
 .App {
-  text-align: center;
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
 }
-@font-face {
-  font-family: 'Roboto';
-  src: url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.customLegend{
+  text-align: center;
 }
 
 img.logo {
-  margin-left:  calc(4vh);
+  margin-left:  calc(6vh);
 }
 
 @media (prefers-reduced-motion: no-preference) {

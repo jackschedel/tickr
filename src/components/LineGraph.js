@@ -12,7 +12,7 @@ import {
     YAxis,
     CartesianAxis
 } from "recharts";
-import {NavDropdown} from "react-bootstrap";
+import {Dropdown, NavDropdown} from "react-bootstrap";
 
 class AreaRechartComponent extends React.Component {
     constructor() {
@@ -88,28 +88,25 @@ class AreaRechartComponent extends React.Component {
         let payload = props.payload;
         //console.log(props);
         return (
-            <ul>
-                {
                     payload.map((stock) => (
-                        <div key={stock.dataKey}>
-                            <NavDropdown
-                                color = "#C4D6E6"
-                                style = {{fontSize: "medium"}}
-                                id={stock.dataKey}
-                                title={stock.dataKey}
-                                menuVariant="dark"
-                            >
-
-                            </NavDropdown>
+                        <div align={"middle"}>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="lol" style={{color: stock.color, boxShadow: "0px 0px 0px #000000"}} id="dropdown-basic">
+                                    {stock.dataKey}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
                         </div>
                     ))
-                }
-            </ul>
         )
     }
 
     renderLines(){
-        let colorList = ["#c7c7c7", "#5a8ab5", "#000000"];
+        let colorList = ["#c7c7c7", "#5a8ab5", "#9527F2","#9E205C","#1C9D94","#A06746"];
         let outputList = [];
         for (let i = 0; i < colorList.length && i < this.state.stockList.length; i++) {
             outputList.push({
@@ -141,8 +138,8 @@ class AreaRechartComponent extends React.Component {
                 <YAxis domain={['dataMin', 'dataMax' + 100]} strokeWidth="4" orientation="right" stroke="#424455" yAxisId={1} strokeDasharray="7 7"/>
                 <CartesianGrid fill="#31323b" strokeWidth="0"/>
                 {this.renderLines()}
-                <Legend align={"left"} content={this.renderLegend}/>
-                <ReferenceLine y={0} stroke="#50536a" />
+                <Legend orientation={"horizontal"} content={this.renderLegend}/>
+                <ReferenceLine y={0} stroke="#50536a"/>
                 <Tooltip />
             </LineChart>
         </div>

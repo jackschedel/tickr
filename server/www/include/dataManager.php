@@ -1,17 +1,20 @@
 <?php
 	
-	/*TODO: 
+	/*
+	
 	DONE:
 	- time frame (have both ends regaradless of mod)
+	- multi-database support
+
 	
 	
 	
 	TODO:
-	- multi-database support
 	- tuplecount
 	- more complex stats
 	- group computations? (ideally frontend)
 	- averaging rather than pulling? (def not worth, just use higher res)
+	
 	*/
 	
 	$dbServername = "//oracle.cise.ufl.edu/orcl";
@@ -112,9 +115,17 @@ function getStockData($ticker, $statistic, $resolution, $startDate, $endDate) {
 			break;
 	}
 	
-	$userDB = "jschedel";
+	$userDB = "JSCHEDEL";
 
-
+	
+	if($ticker >= 'SCI') {
+		$userDB = "CHRISTIANMOSEY";
+		
+	} else if($ticker >= 'IBCP') {
+		$userDB = "C.ONOH";
+		
+	}
+	
 
 	if($startDate == NULL) {
 		

@@ -90,7 +90,7 @@ class AreaRechartComponent extends React.Component {
     addStock(data) {
         var temp = this.state.stockList;
         const index = temp.indexOf(data.value);
-        if (index==-1) {
+        if (index===-1) {
             temp.push(data.value);
         }
         this.setState({stockList: temp}, () => {
@@ -169,6 +169,42 @@ class AreaRechartComponent extends React.Component {
         )
     }
 
+    renderAdd() {
+        if (this.state.stockList.length >= 6) {
+            return (
+                <div align={"middle"}>
+                <Dropdown
+                    disabled
+                    button
+                    style={{height: '30px', width: '55px', fontSize: 12, backgroundColor: 'teal', color: "white"}}
+                    color = "white"
+                    text = "+"
+                    selection
+                    compact
+                    />
+            </div>
+            )
+        }
+        return (
+            <div align={"middle"}>
+                <Dropdown
+                    button
+                    style={{height: '30px', width: '55px', fontSize: 12, backgroundColor: 'teal', color: "white"}}
+                    color = "white"
+                    text = "+"
+                    selection
+                    search
+                    scrolling
+                    lazyLoad
+                    onChange={(e, data) => this.addStock(data)}
+                    closeOnChange
+                    options={tickerList}
+                    compact
+                    />
+            </div>
+        )
+    }
+
     render() {
         return(
         <div className="Graph">
@@ -189,21 +225,7 @@ class AreaRechartComponent extends React.Component {
                 <ReferenceLine y={0} stroke="#50536a"/>
                 <Tooltip />
             </LineChart>
-            <div align={"middle"}>
-                <Dropdown
-                    button
-                    selection
-                    search
-                    scrolling
-                    lazyLoad
-                    closeOnChange
-                    options={tickerList}
-                    style={{height: '30px', width: '55px', fontSize: 12, backgroundColor: 'teal', color: "white"}}
-                    color = "white"
-                    compact
-                    onChange={(e, data) => this.addStock(data)}
-                    />
-            </div>
+            {this.renderAdd()}
         </div>
         )
     };

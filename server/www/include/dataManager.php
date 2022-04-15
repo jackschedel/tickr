@@ -41,11 +41,8 @@ function tupleCount() {
 	$countResponse = 0;
 
 	
-	$userDB = "jschedel";
 	
-	
-	
-	$countStatement = oci_parse($conn, "SELECT COUNT(*) AS TOTAL FROM {$userDB}.stockReport");
+	$countStatement = oci_parse($conn, "SELECT COUNT(*) AS TOTAL FROM JSCHEDEL.stockReport");
 	
 	oci_execute($countStatement);
 	
@@ -55,36 +52,30 @@ function tupleCount() {
 	
 	
 	
+	$countStatement = oci_parse($conn, "SELECT COUNT(*) AS TOTAL FROM CHRISTIANMOSEY.stockReport");
+	
+	oci_execute($countStatement);
+	
+	$countResponse = $countResponse + oci_fetch_assoc($countStatement)['TOTAL'];
+	
+	oci_free_statement($countStatement);
 	
 	
+	
+	$countStatement = oci_parse($conn, "SELECT COUNT(*) AS TOTAL FROM \"C.ONOH\".stockReport");
+	
+	oci_execute($countStatement);
+	
+	$countResponse = $countResponse + oci_fetch_assoc($countStatement)['TOTAL'];
+	
+	oci_free_statement($countStatement);
+	
+	
+
+	exit(json_encode($countResponse));
 	
 }
 
-
-
-function tempTest() {
-	global $conn;
-	
-    // Create Connection to Datbase
-    if (!$conn) error("Could not connect to database.");
-	
-	$statement = oci_parse($conn, 'SELECT Ticker FROM jschedel.STOCK WHERE Ticker < \'ABC\'');
-	oci_execute($statement);
-
-	$response = array();
-	$category["ticker"] = "temp";
-
-	while (($row = oci_fetch_object($statement))) {
-		$response[] = $row;
-	}
-	
-	exit(json_encode($response));
-	
-	oci_free_statement($statement);
-	oci_close($conn);
-
-}
-	
 function getStockData($ticker, $statistic, $resolution, $startDate, $endDate) {
 	global $conn;
 	
@@ -122,7 +113,7 @@ function getStockData($ticker, $statistic, $resolution, $startDate, $endDate) {
 		$userDB = "CHRISTIANMOSEY";
 		
 	} else if($ticker >= 'IBCP') {
-		$userDB = "C.ONOH";
+		$userDB = "\"C.ONOH\"";
 		
 	}
 	
@@ -236,9 +227,6 @@ function getStockData($ticker, $statistic, $resolution, $startDate, $endDate) {
 		switch ($_GET['Reason']) {
 			case "tupleCount":
 				tupleCount();
-				break;
-			case "tempTest":
-				tempTest();
 				break;
 			case "stockData":			
 				getStockData($_GET['Ticker'], $_GET['Statistic'], $_GET['Resolution'], $_GET['StartDate'], $_GET['EndDate']);         //Get the meta data of every story the user has access to

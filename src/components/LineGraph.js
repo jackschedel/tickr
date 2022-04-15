@@ -1,4 +1,5 @@
 import React from "react";
+import { DropdownButton } from "react-bootstrap";
 import {
     Area,
     Line,
@@ -86,9 +87,23 @@ class AreaRechartComponent extends React.Component {
         }
     ]
 
+    addStock(data) {
+        var temp = this.state.stockList;
+        const index = temp.indexOf(data.value);
+        if (index==-1) {
+            temp.push(data.value);
+        }
+        this.setState({stockList: temp}, () => {
+            console.log(this.state.stockList);
+        })
+    }
+
     changeStock(stock, data) {
         var temp = this.state.stockList;
-        temp[temp.indexOf(stock.dataKey)]=data.value;
+        const index = temp.indexOf(stock.dataKey);
+        if (index>-1) {
+            temp[index]=data.value;
+        }
         this.setState({stockList: temp},() => {
             console.log(this.state.stockList);
         });
@@ -96,8 +111,7 @@ class AreaRechartComponent extends React.Component {
 
     removeStock(stock) {
         var temp = this.state.stockList;
-        console.log(temp);
-        var index = temp.indexOf(stock.dataKey);
+        const index = temp.indexOf(stock.dataKey);
         if(index>-1) {
             temp.splice(index, 1);
         }
@@ -175,6 +189,21 @@ class AreaRechartComponent extends React.Component {
                 <ReferenceLine y={0} stroke="#50536a"/>
                 <Tooltip />
             </LineChart>
+            <div align={"middle"}>
+                <Dropdown
+                    button
+                    selection
+                    search
+                    scrolling
+                    lazyLoad
+                    closeOnChange
+                    options={tickerList}
+                    style={{height: '30px', width: '55px', fontSize: 12, backgroundColor: 'teal', color: "white"}}
+                    color = "white"
+                    compact
+                    onChange={(e, data) => this.addStock(data)}
+                    />
+            </div>
         </div>
         )
     };

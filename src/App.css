@@ -1,10 +1,13 @@
 .App {
+  font-family: Roboto, sans-serif;
+}
+
+.customLegend{
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+img.logo {
+  margin-left:  40px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,25 +17,25 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #2a2b32;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 30px;
+  color: #C4D6E6;
+}
+
+div.Graph {
+  font-size: 10px;
   color: white;
+}
+
+.nav-link {
+  color: #C4D6E6 !important;
 }
 
 .App-link {
   color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

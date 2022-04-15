@@ -12,11 +12,6 @@ const LandingPage = () => {
             <img className={"logo"} src={logo} alt={"tickr logo"}/>
             <p style={{margin: "0 0 0"}}>Welcome to tickr</p>
             <StockSearch></StockSearch>
-            <div align={"center"}>
-                <Button style= {{backgroundColor: "#5a8ab5", color: "#2a2b32", outlineWidth: 0}}  type="submit" onClick={() => navigate('/Stock')}>
-                    Get Data
-                </Button>
-            </div>
         </header>
     </div>)
 }

@@ -17,10 +17,11 @@ import {Dropdown, Button} from "semantic-ui-react";
 import tickerList from "../components/tickerList";
 
 class AreaRechartComponent extends React.Component {
-    constructor() {
+    constructor(prop) {
+        console.log(prop.stockList)
         super();
         this.state = {
-            stockList: ["APL", "A", "GM"],
+            stockList: prop.stockList,
             data: "Adjusted CLose"
         }
     }
@@ -122,6 +123,7 @@ class AreaRechartComponent extends React.Component {
 
     renderLegend = (props) => {
         let payload = props.payload;
+        console.log(payload);
         return (
                     payload.map((stock) => (
                         <div align={"middle"}>
@@ -145,7 +147,9 @@ class AreaRechartComponent extends React.Component {
                                 options={tickerList}
                                 value={stock.dataKey}
                                 onChange={(e, data) => this.changeStock(stock, data)}
-                            ></Dropdown>
+                            >
+
+                            </Dropdown>
                             </div>               
                         </div>
                     ))
@@ -221,7 +225,7 @@ class AreaRechartComponent extends React.Component {
                 <YAxis domain={['dataMin', 'dataMax' + 100]} strokeWidth="4" orientation="right" stroke="#424455" yAxisId={1} strokeDasharray="7 7"/>
                 <CartesianGrid fill="#31323b" strokeWidth="0"/>
                 {this.renderLines()}
-                <Legend orientation={"horizontal"} content={this.renderLegend}/>
+                <Legend content={this.renderLegend}/>
                 <ReferenceLine y={0} stroke="#50536a"/>
                 <Tooltip />
             </LineChart>

@@ -1,6 +1,9 @@
 import tickerList from "../components/tickerList"
 import { Dropdown } from 'semantic-ui-react'
 import React from "react"
+import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
+import ToStockPage from "./toStockPage";
 
 class StockSearch extends React.Component {
         constructor() {
@@ -45,6 +48,7 @@ class StockSearch extends React.Component {
                     >
 
                     </Dropdown>
+                            <ToStockPage props={this.state.stockList}/>
                     </div>
                 )
         }

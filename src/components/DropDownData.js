@@ -4,13 +4,11 @@ import {Dropdown, DropdownButton, NavDropdown} from "react-bootstrap";
 class DropDownData extends React.Component {
     constructor() {
         super();
-
         this.state = {
             title: "Adjusted Close"
         }
     }
     items = ["Adjusted Close", "Open", "Close", "Low", "High", "Volume"]
-
 
     changeValue(text) {
         this.setState({title: text})
@@ -19,9 +17,7 @@ class DropDownData extends React.Component {
         let options = [];
         for (let i = 0; i <= this.items.length; i++){
             if (this.items[i] !== this.state.title) {
-                let stringhref = "#action/3."
-                stringhref += {i}
-                options.push(<NavDropdown.Item key={i} href={stringhref}>
+                options.push(<NavDropdown.Item key={i}>
                     <div onClick={(e) => this.changeValue(this.items[i])}>{this.items[i]}</div>
                 </NavDropdown.Item>)
             }

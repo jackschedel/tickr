@@ -87,7 +87,7 @@ class AreaRechartComponent extends React.Component {
         return (
                     payload.map((stock) => (
                         <div align={"middle"}>
-                            <div  style={{fontSize: 15, color: stock.color, textAlign: "center", margin: "0 0 0.5em"}}>
+                            <div  style={{fontSize: 15, color: stock.color, textAlign: "middle", margin: "0 0 0.5em"}}>
                             <Button.Group>
                                 <Button
                                     style={{height: '20px', width : '20px', fontSize: 8, backgroundColor: '#33343d'}}

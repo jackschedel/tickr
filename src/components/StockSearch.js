@@ -29,7 +29,7 @@ class StockSearch extends React.Component {
         }
         render() {
                 return (
-                    <div style={{fontSize: 15, textAlign: "center", margin: "0 0 0.5em"}}>
+                    <div style={{fontSize: 18, textAlign: "center", margin: "0 0 0.5em"}}>
                     <Dropdown
                         placeholder={"Stock"}
                         compact

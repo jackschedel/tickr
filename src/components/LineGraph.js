@@ -129,10 +129,18 @@ class AreaRechartComponent extends React.Component {
                                 lazyLoad
                                 closeOnChange
                                 options={tickerList}
-                                defaultValue={stock.dataKey}
+                                value={stock.dataKey}
                                 onChange={(e, data) => this.changeStock(stock, data)}
                             ></Dropdown>
-                            </div>               
+                            </div>
+                            <Button
+                                    style={{height: '20px', width : '20px', fontSize: 8, backgroundColor: '#33343d'}}
+                                    compact
+                                    content='X'
+                                    focusable
+                                    negative
+                                    onClick={() => this.removeStock(stock)}
+                                    />               
                         </div>
                     ))
         )

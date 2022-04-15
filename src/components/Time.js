@@ -1,7 +1,7 @@
 import tickerList from "../components/tickerList"
 import { Dropdown } from 'semantic-ui-react'
 import React from "react"
-import timeList from "./timeList";
+import Months from "./Months";
 
 class Time extends React.Component {
         constructor() {

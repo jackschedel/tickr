@@ -2,6 +2,7 @@ import tickerList from "../components/tickerList"
 import { Dropdown } from 'semantic-ui-react'
 import React from "react"
 
+const stockArr = [];
 class StockSearch extends React.Component {
         constructor() {
                 super();
@@ -26,6 +27,9 @@ class StockSearch extends React.Component {
                 console.log(data.value)
                 this.setState({stockList: data.value})
         }
+        handleSelect(data){
+                stockArr.push(data);
+        }
         render() {
                 console.log(this.state.stockList)
                 return (
@@ -42,12 +46,17 @@ class StockSearch extends React.Component {
                         selection={this.state.stockList.length < 6}
                         options={tickerList}
                         onChange={(e, data) => this.addStock(data)}
+                        onSelect={(e, data) => this.handleSelect(data)}
                     >
 
                     </Dropdown>
                     </div>
                 )
         }
+}
+
+function getArr(){
+        return stockArr;
 }
 
 

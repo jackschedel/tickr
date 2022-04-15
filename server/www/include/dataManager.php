@@ -217,7 +217,7 @@ function getStockData($ticker, $statistic, $resolution, $startDate, $endDate) {
 			
 			
 			oci_execute($dateStatement4);
-
+			
 			
 			$temp = oci_fetch_assoc($dateStatement4)['REPORTDATE'];
 			
@@ -423,7 +423,7 @@ function getStockData($ticker, $statistic, $resolution, $startDate, $endDate) {
 				tupleCount();
 				break;
 			case "stockData":			
-				getStockData($_GET['Ticker'], $_GET['Statistic'], $_GET['Resolution'], $_GET['StartDate'], $_GET['EndDate']);         //Get the meta data of every story the user has access to
+				@getStockData($_GET['Ticker'], $_GET['Statistic'], $_GET['Resolution'], $_GET['StartDate'], $_GET['EndDate']);         //Get the meta data of every story the user has access to
 				break;
 			default:
 				error("Malformed Request: Invalid Reason");

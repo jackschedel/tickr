@@ -12,7 +12,8 @@ import {
     YAxis,
     CartesianAxis
 } from "recharts";
-import {Dropdown, NavDropdown} from "react-bootstrap";
+import {Dropdown} from "semantic-ui-react";
+import tickerList from "../components/tickerList";
 
 class AreaRechartComponent extends React.Component {
     constructor() {
@@ -85,22 +86,30 @@ class AreaRechartComponent extends React.Component {
         }
     ]
 
+    changeStock(stock, data) {
+        var temp = this.state.stockList;
+        temp[temp.indexOf(stock.dataKey)]=data.value;
+        this.setState({stockList: temp},() => {
+            console.log(this.state.stockList);
+        });
+    }
+
     renderLegend = (props) => {
         let payload = props.payload;
-        //console.log(props);
         return (
                     payload.map((stock) => (
                         <div align={"middle"}>
-                            <Dropdown>
-                                <Dropdown.Toggle variant="lol" style={{color: stock.color, boxShadow: "0px 0px 0px #000000"}} id="dropdown-basic">
-                                    {stock.dataKey}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                            <div  style={{fontSize: 15, color: stock.color, textAlign: "center", margin: "0 0 0.5em"}}>
+                            <Dropdown
+                                search
+                                scrolling
+                                lazyLoad
+                                closeOnChange
+                                options={tickerList}
+                                defaultValue={stock.dataKey}
+                                onChange={(e, data) => this.changeStock(stock, data)}
+                                ></Dropdown>
+                            </div>               
                         </div>
                     ))
         )

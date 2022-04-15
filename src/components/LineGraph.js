@@ -12,7 +12,7 @@ import {
     YAxis,
     CartesianAxis
 } from "recharts";
-import {Dropdown} from "semantic-ui-react";
+import {Dropdown, Button} from "semantic-ui-react";
 import tickerList from "../components/tickerList";
 
 class AreaRechartComponent extends React.Component {
@@ -94,12 +94,35 @@ class AreaRechartComponent extends React.Component {
         });
     }
 
+    removeStock(stock) {
+        var temp = this.state.stockList;
+        console.log(temp);
+        var index = temp.indexOf(stock.dataKey);
+        if(index>-1) {
+            temp.splice(index, 1);
+        }
+        this.setState({stockList: temp}, () => {
+            console.log(this.state.stockList);
+        });
+    }
+
     renderLegend = (props) => {
         let payload = props.payload;
         return (
                     payload.map((stock) => (
                         <div align={"middle"}>
                             <div  style={{fontSize: 15, color: stock.color, textAlign: "center", margin: "0 0 0.5em"}}>
+                            <Button.Group>
+                                <Button
+                                    style={{height: '20px', width : '20px', fontSize: 8, backgroundColor: '#33343d'}}
+                                    compact
+                                    content='X'
+                                    focusable
+                                    negative
+                                    onClick={() => this.removeStock(stock)}
+                                    />
+                            </Button.Group>
+                            {'  '}
                             <Dropdown
                                 search
                                 scrolling
@@ -108,7 +131,7 @@ class AreaRechartComponent extends React.Component {
                                 options={tickerList}
                                 defaultValue={stock.dataKey}
                                 onChange={(e, data) => this.changeStock(stock, data)}
-                                ></Dropdown>
+                            ></Dropdown>
                             </div>               
                         </div>
                     ))

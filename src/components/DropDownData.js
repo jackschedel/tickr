@@ -1,11 +1,14 @@
 import React from 'react';
 import {Dropdown, DropdownButton, NavDropdown} from "react-bootstrap";
+import LineGraph from "./LineGraph";
 
 class DropDownData extends React.Component {
-    constructor() {
+    constructor(prop) {
         super();
+        console.log(prop.stockList)
         this.state = {
-            title: "Adjusted Close"
+            title: "Adjusted Close",
+            stockList: prop.stockList
         }
     }
     items = ["Adjusted Close", "Open", "Close", "Low", "High", "Volume"]
@@ -28,7 +31,9 @@ class DropDownData extends React.Component {
     }
 
     render() {
+        console.log(this.state.title)
         return (
+            <div>
             <div className="DataDrop">
                 <NavDropdown
                     color = "#C4D6E6"
@@ -39,6 +44,8 @@ class DropDownData extends React.Component {
                 >
                     {this.getOptions()}
                 </NavDropdown>
+            </div>
+                <LineGraph props={this.state}></LineGraph>
             </div>
         )
     }

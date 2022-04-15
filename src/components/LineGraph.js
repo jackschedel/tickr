@@ -1,5 +1,4 @@
 import React from "react";
-import { DropdownButton } from "react-bootstrap";
 import {
     Area,
     Line,
@@ -15,78 +14,43 @@ import {
 } from "recharts";
 import {Dropdown, Button} from "semantic-ui-react";
 import tickerList from "../components/tickerList";
+import axios from "axios";
 
 class AreaRechartComponent extends React.Component {
     constructor(prop) {
-        console.log(prop.stockList)
         super();
         this.state = {
-            stockList: prop.stockList,
-            data: "Adjusted CLose"
+            stockList: prop.props.stockList,
+            data: prop.props.title,
+            responseData: [],
+            loaded: false
         }
     }
-    data = [
-        {
-            "name": "Jan 2019",
-            "APL": 3432,
-            "A": 2342,
-            "GM": 9402
-        },
-        {
-            "name": "Feb 2019",
-            "APL": 2342,
-            "A": 3246,
-            "GM": 2329
-        },
-        {
-            "name": "Mar 2019",
-            "APL": -4565,
-            "A": 4556,
-            "GM": 2302
-        },
-        {
-            "name": "April 2019",
-            "APL": 6654,
-            "A": 4465,
-            "GM": 4390,
-        },
-        {
-            "name": "May 2019",
-            "APL": 8765,
-            "A": 4553,
-            "GM": 2131,
-        },
-        {
-            "name": "June 2019",
-            "APL": 4328,
-            "A": 1024,
-            "GM": 2432
-        },
-        {
-            "name": "July 2019",
-            "APL": 7904,
-            "A": 3742,
-            "GM": 6490
-        },
-        {
-            "name": "Aug 2019",
-            "APL": 2892,
-            "A": 1901,
-            "GM": 4322
-        },
-        {
-            "name": "Sept 2019",
-            "APL": 7590,
-            "A": 2090,
-            "GM": 4902
-        },
-        {
-            "name": "Nov 2019",
-            "APL": 2389,
-            "A": 4900,
-            "GM": 6062
-        }
-    ]
+
+    componentWillReceiveProps(nextProps, nextContext){
+        this.setState({data: nextProps.props.title})
+    }
+    getData(currStock, data){
+        console.log(data)
+        axios.get('http://localhost:80', {
+            params: {
+                Reason: "stockData",
+                Statistic: data,
+                Ticker: currStock,
+                Resolution: 20,
+                StartDate: "",
+                EndDate: ""
+            }
+        })
+            .then(response => {
+                let output = response.data
+                this.setState({responseData: output, loaded: true})
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+    }
 
     addStock(data) {
         var temp = this.state.stockList;
@@ -94,8 +58,7 @@ class AreaRechartComponent extends React.Component {
         if (index===-1) {
             temp.push(data.value);
         }
-        this.setState({stockList: temp}, () => {
-            console.log(this.state.stockList);
+        this.setState({stockList: temp, loaded: false}, () => {
         })
     }
 
@@ -105,8 +68,7 @@ class AreaRechartComponent extends React.Component {
         if (index>-1) {
             temp[index]=data.value;
         }
-        this.setState({stockList: temp},() => {
-            console.log(this.state.stockList);
+        this.setState({stockList: temp, loaded: false},() => {
         });
     }
 
@@ -116,14 +78,12 @@ class AreaRechartComponent extends React.Component {
         if(index>-1) {
             temp.splice(index, 1);
         }
-        this.setState({stockList: temp}, () => {
-            console.log(this.state.stockList);
+        this.setState({stockList: temp, loaded: false}, () => {
         });
     }
 
     renderLegend = (props) => {
         let payload = props.payload;
-        console.log(payload);
         return (
                     payload.map((stock) => (
                         <div align={"middle"}>
@@ -210,19 +170,23 @@ class AreaRechartComponent extends React.Component {
     }
 
     render() {
+        if (!this.state.loaded) {
+            this.getData(this.state.stockList, this.state.data)
+        }
+        console.log(this.state.responseData)
         return(
         <div className="Graph">
-            <LineChart width={800} height={450} data={this.data} stackOff
+            <LineChart width={800} height={450} data={this.state.responseData} stackOff
                        margin={{
                            top: 20,
                            right: 20,
                            left: 20,
                            bottom: 5,
                        }}>
-                <XAxis dataKey="name" strokeWidth="5" stroke="#c4d6e6" xAxisId="0" XAxis interval={0}/>
+                <XAxis dataKey="Name" strokeWidth="5" stroke="#c4d6e6" xAxisId="0" XAxis/>
                 <XAxis dataKey="4" strokeWidth={3} orientation="top" stroke="#424455" xAxisId="1" tickCount={0} tickSize="0" strokeDasharray="7 7"/>
-                <YAxis domain={['dataMin', 'dataMax']} strokeWidth="5" stroke="#c4d6e6" yAxisId={0}/>
-                <YAxis domain={['dataMin', 'dataMax' + 100]} strokeWidth="4" orientation="right" stroke="#424455" yAxisId={1} strokeDasharray="7 7"/>
+                <YAxis scale={"auto"} strokeWidth="5" stroke="#c4d6e6" yAxisId={0}/>
+                <YAxis scale={"auto"} strokeWidth="4" orientation="right" stroke="#424455" yAxisId={1} strokeDasharray="7 7"/>
                 <CartesianGrid fill="#31323b" strokeWidth="0"/>
                 {this.renderLines()}
                 <Legend content={this.renderLegend}/>

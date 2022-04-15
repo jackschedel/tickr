@@ -8,10 +8,9 @@ const Stonks = (props) => {
     const location = useLocation();
     let stocks = location.state.stockList.prop.props
     return(
-        <div className='App'>
+        <div className='App' align={"center"}>
             <header className='App-header'>
-                <DropDownData></DropDownData>
-                <LineGraph stockList={stocks}></LineGraph>
+                <DropDownData stockList={stocks}></DropDownData>
             </header>
         </div>
 

@@ -16,6 +16,11 @@ img.logo {
   }
 }
 
+div.DataDrop{
+  width: 230px;
+  align-content: center;
+}
+
 .App-header {
   background-color: #2a2b32;
   min-height: 100vh;

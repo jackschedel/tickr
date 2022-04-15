@@ -14,7 +14,6 @@ class StockSearch extends React.Component {
                 }
         }
         openHandeler (data){
-                console.log(data)
                 if (this.state.stockList.length < 6){
                         this.setState({open: true});
                 }
@@ -26,11 +25,9 @@ class StockSearch extends React.Component {
                 this.setState({open: false});
         }
         addStock(data) {
-                console.log(data.value)
                 this.setState({stockList: data.value})
         }
         render() {
-                console.log(this.state.stockList)
                 return (
                     <div style={{fontSize: 15, textAlign: "center", margin: "0 0 0.5em"}}>
                     <Dropdown

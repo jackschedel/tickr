@@ -9,7 +9,7 @@ function ToStockPage(prop){
     }
     return(
     <div align={"center"} style={{margin: "5px 0 0"}}>
-        <Button style= {{backgroundColor: "#5a8ab5", color: "#2a2b32", outlineWidth: 0}}  type="submit" onClick={() => {toStock()}}>
+        <Button style= {{fontSize: 18, backgroundColor: "#5a8ab5", color: "#2a2b32", outlineWidth: 0}}  type="submit" onClick={() => {toStock()}}>
             Get Data
         </Button>
     </div>

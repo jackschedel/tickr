@@ -12,7 +12,7 @@ class Time extends React.Component {
         }
         openHandeler (data){
                 console.log(data)
-                if (this.state.timeRange.length <= 2){
+                if (this.state.timeRange.length < 2){
                         this.setState({open: true});
                 }
                 else{
@@ -29,7 +29,7 @@ class Time extends React.Component {
         render() {
                 console.log(this.state.timeRange)
                 return (
-                    <div style={{fontSize: 15, textAlign: "center", margin: "0 0 0.8em"}}>
+                    <div style={{fontSize: 18, textAlign: "center", margin: "0 0 0.8em"}}>
                     <Dropdown
                         placeholder={"Time"}
                         compact
@@ -37,7 +37,7 @@ class Time extends React.Component {
                         onOpen={(e, data) => this.openHandeler(data)}
                         onClose={(e, data) => this.closeHandeler()}
                         open={this.state.open}
-                        closeOnChange={this.state.timeRange.length >= 2}
+                        closeOnChange={this.state.timeRange.length > 0}
                         search={this.state.timeRange.length < 2}
                         selection={this.state.timeRange.length < 2}
                         options={Months}

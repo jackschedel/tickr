@@ -18,8 +18,8 @@
 	*/
 	
 	$dbServername = "//oracle.cise.ufl.edu/orcl";
-	$dbUsername = "";
-	$dbPassword ="";
+	$dbUsername = "jschedel";
+	$dbPassword ="YvlckrJou5LvVgMR0wlzBlbY";
 	$dbName = "orcl";
 	
 	

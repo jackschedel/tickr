@@ -1,21 +1,18 @@
-import tickerList from "../components/tickerList"
 import { Dropdown } from 'semantic-ui-react'
 import React from "react"
-import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router-dom";
-import ToStockPage from "./toStockPage";
+import Months from "../components/Months";
 
-class StockSearch extends React.Component {
+class Time extends React.Component {
         constructor() {
                 super();
                 this.state={
-                        stockList: [],
+                        timeRange: [],
                         open: false
                 }
         }
         openHandeler (data){
                 console.log(data)
-                if (this.state.stockList.length < 6){
+                if (this.state.timeRange.length <= 2){
                         this.setState({open: true});
                 }
                 else{
@@ -25,34 +22,33 @@ class StockSearch extends React.Component {
         closeHandeler(){
                 this.setState({open: false});
         }
-        addStock(data) {
+        addTime(data) { //--
                 console.log(data.value)
-                this.setState({stockList: data.value})
+                this.setState({timeRange: data.value})
         }
         render() {
-                console.log(this.state.stockList)
+                console.log(this.state.timeRange)
                 return (
-                    <div style={{fontSize: 18, textAlign: "center", margin: "0 0 0.5em"}}>
+                    <div style={{fontSize: 15, textAlign: "center", margin: "0 0 0.8em"}}>
                     <Dropdown
-                        placeholder={"Stock"}
+                        placeholder={"Time"}
                         compact
                         multiple
                         onOpen={(e, data) => this.openHandeler(data)}
                         onClose={(e, data) => this.closeHandeler()}
                         open={this.state.open}
-                        closeOnChange={this.state.stockList.length > 4}
-                        search={this.state.stockList.length < 6}
-                        selection={this.state.stockList.length < 6}
-                        options={tickerList}
-                        onChange={(e, data) => this.addStock(data)}
+                        closeOnChange={this.state.timeRange.length >= 2}
+                        search={this.state.timeRange.length < 2}
+                        selection={this.state.timeRange.length < 2}
+                        options={Months}
+                        onChange={(e, data) => this.addTime(data)}
                     >
 
                     </Dropdown>
-                            <ToStockPage props={this.state.stockList}/>
                     </div>
                 )
         }
 }
 
 
-export default StockSearch
+export default Time

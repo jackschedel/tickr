@@ -13,7 +13,6 @@ const LandingPage = () => {
         <header className="App-header">
             <img className={"logo"} src={logo} alt={"tickr logo"}/>
             <p style={{margin: "0 0 0"}}>Welcome to tickr</p>
-            <Time></Time>
             <StockSearch></StockSearch>
         </header>
     </div>)

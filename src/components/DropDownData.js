@@ -7,7 +7,7 @@ class DropDownData extends React.Component {
         super();
         console.log(prop.stockList)
         this.state = {
-            title: "Adjusted Close",
+            title: "Close",
             stockList: prop.stockList
         }
     }

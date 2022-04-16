@@ -28,7 +28,7 @@ class AreaRechartComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext){
-        this.setState({data: nextProps.props.title})
+        this.setState({data: nextProps.props.title, loaded: false})
     }
     getData(currStock, data){
         console.log(data)
@@ -37,7 +37,7 @@ class AreaRechartComponent extends React.Component {
                 Reason: "stockData",
                 Statistic: data,
                 Ticker: currStock,
-                Resolution: 20,
+                Resolution: 35,
                 StartDate: "",
                 EndDate: ""
             }

@@ -18,7 +18,7 @@
 **tickr** is a React webapp that provides users with an interactive platform to visualize and compare multiple stocks at once, supported with a MySQL backend and custom PHP API. In a market oversaturated with ugly, complicated tools, **tickr** simplifies the stock data visualization experience with a beautiful and minimalistic design.
 
 <p align="center">
-<img src="https://i.imgur.com/EfhyH8q.gif" width="65%"/>
+<img src="https://github.com/jackschedel/tickr/assets/26682594/35e146b7-91c2-490a-82bf-1a23e33c8415" width="65%"/>
 </p>
 
 ## ⚙️ Features
